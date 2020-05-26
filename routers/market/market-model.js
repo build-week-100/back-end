@@ -5,8 +5,8 @@ module.exports = {
     findBy,
     findUserListings,
     add,
-    remove,
-    edit
+    edit,
+    remove    
 }
 
 function find() {
@@ -31,12 +31,6 @@ function add(listing, user_id) {
         })
 }
 
-function remove(id) {
-    return db('listings')
-        .where({ id: id})
-        .del()
-}
-
 function edit(changes, id) {
     return db('listings')
         .where({ id: id })
@@ -44,4 +38,10 @@ function edit(changes, id) {
         .then(count => {
             return findBy({id})
         })
+}
+
+function remove(id) {
+    return db('listings')
+        .where({ id: id})
+        .del()
 }
