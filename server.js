@@ -12,6 +12,10 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
+server.get('/', (req, res) => {
+    res.json({ message: "API is running" })
+})
+
 server.use('/api/auth', authRouter);
 server.use('/api/market', authenticate, marketRouter);
 
