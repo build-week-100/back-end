@@ -47,7 +47,7 @@ router.get('/user/:id', (req, res) => {
         })
 })
 
-router.post('/:id/listings', validateListing, (req, res) => {
+router.post('/user/:id', validateListing, (req, res) => {
     const { product_name, product_category, product_description, product_quantity, product_price, country, market_name } = req.body;
     const { id } = req.params;
 
@@ -57,23 +57,6 @@ router.post('/:id/listings', validateListing, (req, res) => {
                 res.status(201).json({ data: newListing })
             }else {
                 res.status(404).json({ message: "Newly created listing not found" })
-            }
-        })
-        .catch(error => {
-            console.log({ error })
-            res.status(500).json({ message: error.message })
-        })
-})
-
-router.delete('/:id', (req, res) => {
-    const { id } = req.params;
-
-    Listings.remove(id)
-        .then(count => {
-            if(count) {
-                res.status(204).end()
-            }else {
-                res.status(404).json({ message: "Listing with specified ID not found" })
             }
         })
         .catch(error => {
@@ -92,6 +75,23 @@ router.put('/:id', validateListing, (req, res) => {
                 res.status(200).json({ data: updatedListing })
             }else {
                 res.status(404).json({ message: "Listing with specified ID not found"})
+            }
+        })
+        .catch(error => {
+            console.log({ error })
+            res.status(500).json({ message: error.message })
+        })
+})
+
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+
+    Listings.remove(id)
+        .then(count => {
+            if(count) {
+                res.status(204).end()
+            }else {
+                res.status(404).json({ message: "Listing with specified ID not found" })
             }
         })
         .catch(error => {
