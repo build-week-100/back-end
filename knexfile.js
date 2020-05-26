@@ -1,5 +1,5 @@
 // Update with your config settings.
-const pgConnection = process.env.DATABASE_URL || { database: 'pgmarket', user: 'username', password: 'password'}
+const pgConnection = process.env.DATABASE_URL || "postgresql://postgres@localhost/pgmarket"
 
 module.exports = {
 
