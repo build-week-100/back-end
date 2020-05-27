@@ -17,7 +17,7 @@ router.get('/:id', (req, res) => {
     const { id } = req.params;
 
     Listings.findBy({id})
-        .then(listing => {
+        .then(([listing]) => {
             if(listing) {
                 res.status(200).json({ data: listing })
             }else {
@@ -34,7 +34,7 @@ router.get('/user/:id', (req, res) => {
     const { id } = req.params;
 
     Listings.findUserListings(id)
-        .then(listing => {
+        .then(([listing]) => {
             if(listing) {
                 res.status(200).json({ data: listing })
             }else {
