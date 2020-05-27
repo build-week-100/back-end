@@ -6,7 +6,7 @@ const bcryptjs = require('bcryptjs');
 
 const Users = require('./auth-model');
 
-router.post('/register', (req, res) => {
+router.post('/register', validateUser, (req, res) => {
   const { username, password } = req.body;
   const credentials = { username, password };
 
@@ -29,7 +29,7 @@ router.post('/register', (req, res) => {
   }
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', validateUser, (req, res) => {
   const { username, password } = req.body;
 
   if({ username, password }) {
@@ -61,6 +61,18 @@ router.get('/', (req, res) => {
              res.status(500).json({ message: error.message })
          })
 })
+
+function validateUser(req, res, next) {
+  const { username, password } = req.body;
+
+  if(Object.entries(req.body).length === 0) {
+      res.status(400).json({ message: "No User Data" })
+  }else if(!username || !password) {
+      res.status(400).json({ message: "Username and Password are required fields" })
+  }else {
+      next();
+  }
+}
 
 function createToken(user) {
   const payload = {
