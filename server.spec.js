@@ -159,7 +159,68 @@ describe('server', () => {
                 .set('Authorization', logged.body.token)
 
             expect(res.status).toBe(404)
-            expect(res.body).toEqual({ message: "Listings of User with specified ID not found" })
+            expect(res.body).toEqual({ message: "User with specified ID not found" })
+        })
+    })
+
+    describe('POST /api/marked/user/:id', () => {
+        it('should return http status 201', async() => {
+            const logged = await supertest(server)
+                .post('/api/auth/login')
+                .send({ username: 'BusiaMarket', password: 'password' })
+
+            const res = await supertest(server)
+                .post('/api/market/user/2')
+                .set('Authorization', logged.body.token)
+                .send({ product_name: 'New', product_category: 'New', product_description: 'New', product_quantity: 'New', product_price: 'New', country: 'New', market_name: 'New' })
+
+            expect(res.status).toBe(201)
+            expect(res.body.data.id).toBeDefined()
+        })
+
+        it('should return http status 404 if user with id not found', async() => {
+            const logged = await supertest(server)
+                .post('/api/auth/login')
+                .send({ username: 'BusiaMarket', password: 'password' })
+
+            const res = await supertest(server)
+                .post('/api/market/user/200')
+                .set('Authorization', logged.body.token)
+                .send({ product_name: 'New', product_category: 'New', product_description: 'New', product_quantity: 'New', product_price: 'New', country: 'New', market_name: 'New' })
+
+            expect(res.status).toBe(404)
+            expect(res.body).toEqual({ message: "User with specified ID not found" })
+
+        })
+    })
+
+    describe('PUT /api/market/:id', () => {
+        it('should return http status 200', async() => {
+            const logged = await supertest(server)
+                .post('/api/auth/login')
+                .send({ username: 'BusiaMarket', password: 'password' })
+
+            const res = await supertest(server)
+                .put('/api/market/2')
+                .set('Authorization', logged.body.token)
+                .send({ product_name: 'New', product_category: 'New', product_description: 'New', product_quantity: 'New', product_price: 'New', country: 'New', market_name: 'New' })
+
+            expect(res.status).toBe(200)
+            expect(res.body.data.country).toBe("New")
+        })
+
+        it('should return http status 404 if listing with id not found', async() => {
+            const logged = await supertest(server)
+                .post('/api/auth/login')
+                .send({ username: 'BusiaMarket', password: 'password' })
+
+            const res = await supertest(server)
+                .put('/api/market/200')
+                .set('Authorization', logged.body.token)
+                .send({ product_name: 'New', product_category: 'New', product_description: 'New', product_quantity: 'New', product_price: 'New', country: 'New', market_name: 'New' })
+
+            expect(res.status).toBe(404)
+            expect(res.body).toEqual({ message: "Listing with specified ID not found" })
         })
     })
 })
