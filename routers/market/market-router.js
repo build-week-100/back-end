@@ -36,7 +36,7 @@ router.get('/user/:id', validateUser, (req, res) => {
     const { id } = req.params;
 
     Listings.findUserListings(id)
-        .then(([listing]) => {
+        .then(listing => {
             if(listing) {
                 res.status(200).json({ data: listing })
             }else {
