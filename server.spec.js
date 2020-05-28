@@ -146,7 +146,7 @@ describe('server', () => {
                 .set('Authorization', logged.body.token)
 
             expect(res.status).toBe(200)
-            expect(res.body.data.user_id).toBe(2)
+            expect(res.body.data.length).toBe(3)
         })
 
         it('should return http status 404 if user with id not found', async() => {
@@ -223,4 +223,32 @@ describe('server', () => {
             expect(res.body).toEqual({ message: "Listing with specified ID not found" })
         })
     })
+
+    // describe('DELETE /:id', () => {
+    //     it('should return http status 204', async() => {
+    //         const logged = await supertest(server)
+    //             .post('/api/auth/login')
+    //             .send({ username: 'BusiaMarket', password: 'password' })
+
+    //         const res = await supertest(server)
+    //             .delete('/api/market/2')
+    //             .set('Authorization', logged.body.token)
+
+    //         expect(res.status).toBe(204)
+    //         expect(res.body).toEqual({})
+    //     })
+
+    //     it('should return http status 404 if listing with id not found', async() => {
+    //         const logged = await supertest(server)
+    //         .post('/api/auth/login')
+    //         .send({ username: 'BusiaMarket', password: 'password' })
+
+    //     const res = await supertest(server)
+    //         .delete('/api/market/200')
+    //         .set('Authorization', logged.body.token)
+
+    //     expect(res.status).toBe(404)
+    //     expect(res.body).toEqual({ message: "Listing with specified ID not found" })
+    //     })
+    // })
 })
