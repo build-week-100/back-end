@@ -224,31 +224,31 @@ describe('server', () => {
         })
     })
 
-    // describe('DELETE /:id', () => {
-    //     it('should return http status 204', async() => {
-    //         const logged = await supertest(server)
-    //             .post('/api/auth/login')
-    //             .send({ username: 'BusiaMarket', password: 'password' })
+    describe('DELETE /:id', () => {
+        it('should return http status 204', async() => {
+            const logged = await supertest(server)
+                .post('/api/auth/login')
+                .send({ username: 'BusiaMarket', password: 'password' })
 
-    //         const res = await supertest(server)
-    //             .delete('/api/market/2')
-    //             .set('Authorization', logged.body.token)
+            const res = await supertest(server)
+                .delete('/api/market/2')
+                .set('Authorization', logged.body.token)
 
-    //         expect(res.status).toBe(204)
-    //         expect(res.body).toEqual({})
-    //     })
+            expect(res.status).toBe(204)
+            expect(res.body).toEqual({})
+        })
 
-    //     it('should return http status 404 if listing with id not found', async() => {
-    //         const logged = await supertest(server)
-    //         .post('/api/auth/login')
-    //         .send({ username: 'BusiaMarket', password: 'password' })
+        it('should return http status 404 if listing with id not found', async() => {
+            const logged = await supertest(server)
+            .post('/api/auth/login')
+            .send({ username: 'BusiaMarket', password: 'password' })
 
-    //     const res = await supertest(server)
-    //         .delete('/api/market/200')
-    //         .set('Authorization', logged.body.token)
+        const res = await supertest(server)
+            .delete('/api/market/200')
+            .set('Authorization', logged.body.token)
 
-    //     expect(res.status).toBe(404)
-    //     expect(res.body).toEqual({ message: "Listing with specified ID not found" })
-    //     })
-    // })
+        expect(res.status).toBe(404)
+        expect(res.body).toEqual({ message: "Listing with specified ID not found" })
+        })
+    })
 })
